@@ -13,11 +13,13 @@ app.get("/", async (req, res) => {
     return;
   }
 
+  console.log(`Request from ${username} (${req.ip}) to download ${filename}`);
   const filePath = `${__dirname}/uploads/${username}/${game}/${filename}`;
 
   try {
     const fileContent = await fs.readFile(filePath);
     res.send(fileContent);
+    console.log(`Sent file ${filename} to ${username} (${req.ip})`);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
